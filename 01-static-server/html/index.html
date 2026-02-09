@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nginx Static Server</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+        h1 { color: #009639; }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>✅ nginx está funcionando!</h1>
+    <p>Este arquivo está sendo servido por um servidor nginx rodando em Docker.</p>
+    <p><strong>Path do arquivo:</strong> <code>/usr/share/nginx/html/index.html</code></p>
+    
+    <h2>Experimentos</h2>
+    <ul>
+        <li>Acesse <a href="/sobre.html">/sobre.html</a> (crie este arquivo)</li>
+        <li>Acesse <a href="/nao-existe">/nao-existe</a> (404)</li>
+        <li>Abra o DevTools → Network para ver os headers HTTP</li>
+    </ul>
+</body>
+</html>
