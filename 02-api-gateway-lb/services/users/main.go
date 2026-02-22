@@ -4,6 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"log/slog"
+
+	"os"
 )
 
 type User struct {
@@ -27,15 +31,21 @@ var users = []User{
 
 
 func getUsers(c *gin.Context){
+	slog.Info("Get users endpoint called")
+	slog.Info("Returning users", "users", users)
+	c.Header("X-Instance-ID", os.Getenv("INSTANCE_ID"))
 	c.IndentedJSON(http.StatusOK, users)
 }
 
 func healthCheck(c *gin.Context){
+	slog.Info("Health check endpoint called")
 	response := HealthCheckResponse{
 		Status: "OK",
-		InstanceId: "user-instance-1",
+		InstanceId: os.Getenv("INSTANCE_ID"),
 		ServiceName: "USER-SERVICE",
 	}
+	slog.Info("Health check response", "response", response)
+	c.Header("X-Instance-ID", os.Getenv("INSTANCE_ID"))
 	c.IndentedJSON(http.StatusOK, response)
 }
 

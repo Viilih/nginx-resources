@@ -5,3 +5,18 @@ services:
       - "8080:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf  # sobrescreve a config padrão
+  users-1:
+    build: ./services/users
+    environment:
+      - INSTANCE_ID=users-instance-1
+  users-2:
+    build: ./services/users
+    environment:
+      - INSTANCE_ID=users-instance-2
+
+  users-3:
+    build: ./services/users
+    environment:
+      - INSTANCE_ID=users-instance-3
+
+  
