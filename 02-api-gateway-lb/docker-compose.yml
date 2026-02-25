@@ -1,22 +1,101 @@
+version: '3.8'
+
 services:
+  # ========================================
+  # NGINX
+  # ========================================
   nginx:
     image: nginx:alpine
+    container_name: api-gateway
     ports:
       - "8080:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf  # sobrescreve a config padrão
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - users-1
+      - users-2
+      - users-3
+      - products-1
+      - products-2
+      - orders-1
+      - orders-2
+      - orders-3
+    networks:
+      - app-network
+
+  # ========================================
+  # Users Service
+  # ========================================
   users-1:
     build: ./services/users
+    container_name: users-instance-1
     environment:
       - INSTANCE_ID=users-instance-1
+    networks:
+      - app-network
+
   users-2:
     build: ./services/users
+    container_name: users-instance-2
     environment:
       - INSTANCE_ID=users-instance-2
+    networks:
+      - app-network
 
   users-3:
     build: ./services/users
+    container_name: users-instance-3
     environment:
       - INSTANCE_ID=users-instance-3
+    networks:
+      - app-network
 
-  
+  # ========================================
+  # Products Service
+  # ========================================
+  products-1:
+    build: ./services/products
+    container_name: products-instance-1
+    environment:
+      - INSTANCE_ID=products-instance-1
+    networks:
+      - app-network
+
+  products-2:
+    build: ./services/products
+    container_name: products-instance-2
+    environment:
+      - INSTANCE_ID=products-instance-2
+    networks:
+      - app-network
+
+  # ========================================
+  # Orders Service
+  # ========================================
+  orders-1:
+    build: ./services/orders
+    container_name: orders-instance-1
+    environment:
+      - INSTANCE_ID=orders-instance-1
+    networks:
+      - app-network
+
+  orders-2:
+    build: ./services/orders
+    container_name: orders-instance-2
+    environment:
+      - INSTANCE_ID=orders-instance-2
+    networks:
+      - app-network
+
+  orders-3:
+    build: ./services/orders
+    container_name: orders-instance-3
+    environment:
+      - INSTANCE_ID=orders-instance-3
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
